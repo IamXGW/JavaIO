@@ -1,5 +1,7 @@
 package com.iamxgw.server;
 
+import com.iamxgw.kryocodec.KryoDecoder;
+import com.iamxgw.kryocodec.KryoEncoder;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -24,15 +26,15 @@ public class ServerInit extends ChannelInitializer<SocketChannel> {
         /**
          * 序列化相关
          */
-        ch.pipeline().addLast();
-        ch.pipeline().addLast();
+        ch.pipeline().addLast(new KryoDecoder());
+        ch.pipeline().addLast(new KryoEncoder());
 
         /**
          * 处理心跳超时
          */
         ch.pipeline().addLast(new ReadTimeoutHandler(15));
 
-//        ch.pipeline().addLast(new LoginAuthRespHandler());
+        ch.pipeline().addLast(new LoginAuthRespHandler());
 //        ch.pipeline().addLast(new HeartBeatRespHandler());
 //        ch.pipeline().addLast(new ServerBusiHandler(new DefaultTaskProcessor()));
     }
