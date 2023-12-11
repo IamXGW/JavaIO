@@ -2,6 +2,7 @@ package com.iamxgw.server;
 
 import com.iamxgw.kryocodec.KryoDecoder;
 import com.iamxgw.kryocodec.KryoEncoder;
+import com.iamxgw.server.asyncpro.DefaultTaskProcessor;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -35,7 +36,7 @@ public class ServerInit extends ChannelInitializer<SocketChannel> {
         ch.pipeline().addLast(new ReadTimeoutHandler(15));
 
         ch.pipeline().addLast(new LoginAuthRespHandler());
-//        ch.pipeline().addLast(new HeartBeatRespHandler());
-//        ch.pipeline().addLast(new ServerBusiHandler(new DefaultTaskProcessor()));
+        ch.pipeline().addLast(new HeartBeatRespHandler());
+        ch.pipeline().addLast(new ServerBusiHandler(new DefaultTaskProcessor()));
     }
 }

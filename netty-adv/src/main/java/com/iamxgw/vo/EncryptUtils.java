@@ -1,5 +1,7 @@
 package com.iamxgw.vo;
 
+import com.iamxgw.kryocodec.KryoSerializer;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -59,5 +61,9 @@ public class EncryptUtils {
             encryptStr = EncryptByMD5(encryptStr);
         }
         return encryptStr;
+    }
+
+    public static String encryptObj(Object o) {
+        return encrypt(bytes2Hex(KryoSerializer.obj2Bytes(o)));
     }
 }

@@ -55,4 +55,21 @@ public class KryoSerializer {
         Input input = new Input(new ByteBufInputStream(out));
         return kryo.readClassAndObject(input);
     }
+
+    public static byte[] obj2Bytes(Object object) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Output output = new Output(baos);
+        kryo.writeClassAndObject(output, object);
+        output.flush();
+        output.close();
+
+        byte[] b = baos.toByteArray();
+        try {
+            baos.flush();
+            baos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return b;
+    }
 }
