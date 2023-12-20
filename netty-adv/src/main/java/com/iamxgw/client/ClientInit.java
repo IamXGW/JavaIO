@@ -34,7 +34,7 @@ public class ClientInit extends ChannelInitializer<SocketChannel> {
         ch.pipeline().addLast(new KryoEncoder());
 
         ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
-        ch.pipeline().addLast(new LoginAuthRespHandler());
+        ch.pipeline().addLast(new LoginAuthReqHandler());
 
         /* 连接读空闲检测 */
         ch.pipeline().addLast(new ReadTimeoutHandler(15));
@@ -42,5 +42,6 @@ public class ClientInit extends ChannelInitializer<SocketChannel> {
         /* 向服务器发送心跳请求 */
         ch.pipeline().addLast(new HeartBeatReqHandler());
 
+        ch.pipeline().addLast(new ClientBusiHandler());
     }
 }
